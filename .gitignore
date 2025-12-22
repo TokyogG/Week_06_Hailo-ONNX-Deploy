@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Outputs / artifacts
+outputs/
+*.onnx
+*.hef
+*.har
+*.npz
+*.log
+*.csv
+
+# Model weights
+*.pth
+*.pt
+
+# OS/editor
+.DS_Store
+.vscode/
