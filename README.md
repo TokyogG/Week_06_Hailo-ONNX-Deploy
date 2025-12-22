@@ -1,10 +1,3 @@
-# Week_06_ONNX-Hailo-Deploy
-
-This folder contains all deliverables for **Week_06_ONNX-Hailo-Deploy**  
-More details will be added as the bootcamp progresses.
-
----
-Generated automatically on: Mon Dec  1 01:43:18 PM EST 2025
 # Week 06 — Hailo ONNX Deploy (Raspberry Pi 5 + Hailo-8L)
 
 **Hardware:** Raspberry Pi 5 (aarch64) + Hailo-8L (M.2)  
@@ -16,31 +9,44 @@ Generated automatically on: Mon Dec  1 01:43:18 PM EST 2025
 Build a repeatable deployment pipeline:
 **PyTorch → ONNX → Hailo compile (.hef) → HailoRT inference → benchmarks**
 
-## Success Metrics (fill as you go)
+---
+
+## ✅ Day 01 — ONNX Export & Validation (Completed)
+
+**Objective:**  
+Establish a *known-good* ONNX model as a stable foundation for Hailo compilation.
+
+**Work completed:**
+- Exported pretrained **ResNet18** from PyTorch to ONNX
+- Resolved PyTorch 2.x exporter dependency (`onnxscript`)
+- Validated ONNX graph integrity using `onnx.checker`
+- Verified numerical parity between PyTorch and ONNXRuntime
+- Confirmed identical Top-5 predictions
+
+**Key result:**
+- `max_abs_diff ≈ 5.2e-06` (FP32 parity within tolerance)
+- ONNX model confirmed functionally equivalent to PyTorch
+
+**Artifacts:**
+- `day01_env_and_onnx_export/outputs/resnet18.onnx`
+- Export and validation scripts committed
+
+---
+
+## Success Metrics
 | Item | Target | Result |
 |---|---:|---:|
-| ONNX export validated | ✅ |  |
-| Hailo compile produces .hef | ✅ |  |
-| End-to-end inference runs on Hailo | ✅ |  |
-| FPS / latency measured | ✅ |  |
-| CPU utilization recorded | ✅ |  |
+| ONNX export validated | ✅ | **Completed (Day 01)** |
+| Hailo compile produces .hef | ✅ | ⏳ |
+| End-to-end inference runs on Hailo | ✅ | ⏳ |
+| FPS / latency measured | ✅ | ⏳ |
+| CPU utilization recorded | ✅ | ⏳ |
 
 ---
 
 ## Folder Structure
-- `day01_env_and_onnx_export/` — export + validate ONNX (resnet18 + mobilenet_v2)
-- `day02_hailo_compile_hef/` — compile ONNX → HEF (and record compiler flags)
-- `day03_hailort_inference_runtime/` — minimal HailoRT runner (image → inference → topk)
-- `day04_benchmarking_and_profiling/` — FPS/latency, perf counters, power notes
-- `day05_packaging_and_demo/` — “one command demo”, clean outputs, final writeup
-- `models/` — model artifacts (keep large files out of git if needed)
-- `scripts/` — helper scripts (setup checks, download, run)
-- `notes/` — troubleshooting + learnings
-
----
-
-## Quickstart
-### 0) Sanity check environment
-```bash
-python3 --version
-hailortcli --version
+- `day01_env_and_onnx_export/` — export + validate ONNX (ResNet18)
+- `day02_hailo_compile_hef/` — compile ONNX → HEF (compiler flags + logs)
+- `day03_hailort_inference_runtime/` — minimal HailoRT inference runner
+- `day04_benchmarking_and_profiling/` — latency, FPS, system profiling
+- `day05_packaging_and_demo/` —_
