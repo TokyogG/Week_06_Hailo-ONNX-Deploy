@@ -7,11 +7,13 @@ __pycache__/
 # Outputs / artifacts
 outputs/
 *.onnx
+*.har
 *.hef
 *.har
 *.npz
 *.log
 *.csv
+*.onnx.data
 
 # Model weights
 *.pth
@@ -20,3 +22,6 @@ outputs/
 # OS/editor
 .DS_Store
 .vscode/
+
+# Build / install logs
+.install_logs/
