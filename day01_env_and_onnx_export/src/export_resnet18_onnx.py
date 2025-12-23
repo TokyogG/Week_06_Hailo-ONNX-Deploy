@@ -22,6 +22,8 @@ def main():
         input_names=["input"],
         output_names=["logits"],
         dynamic_axes={"input": {0: "batch"}, "logits": {0: "batch"}},
+        dynamo=False,
+        external_data=False,
     )
     print(f"Saved: {out_path}")
 
