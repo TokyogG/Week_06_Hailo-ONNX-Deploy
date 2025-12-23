@@ -72,10 +72,6 @@ Establish a *known-good* ONNX model as a stable foundation for Hailo compilation
   - **FPS (streaming): 1150.02**
   - **HW Latency: 2.4446 ms**
 
-
-Got it — here is **Day 03 written to match the exact tone, structure, and level of detail of your current README**.
-You can paste this **directly under Day 02** in the same file.
-
 ---
 
 ### Day 03 — HailoRT Runtime Inference (Python)
@@ -146,3 +142,102 @@ Execute **end-to-end runtime inference** on Raspberry Pi 5 using a compiled **Ha
 * Established a reliable baseline runtime script for downstream benchmarking and integration
 
 ---
+
+### Day 04 — Benchmarking & Profiling (HailoRT Runtime)
+
+Objective:
+Quantify runtime performance of the compiled resnet18.hef on Raspberry Pi 5 + Hailo-8L using both:
+
+HailoRT CLI (hardware baseline)
+
+Python HailoRT runtime (real application path: send → execute → recv)
+
+Work completed:
+
+Created day04_benchmarking_and_profiling/ benchmark workspace
+
+Implemented a repeatable Python benchmark script:
+
+warmup iterations
+
+timed inference loop
+
+latency percentiles (P50 / P95 / P99)
+
+throughput (FPS)
+
+Collected baseline metrics using hailortcli benchmark
+
+Ensured benchmarking was executed via system Python (/usr/bin/python3) to avoid ABI issues
+
+Commands used:
+
+Python benchmark (end-to-end send → recv):
+
+/usr/bin/python3 -X faulthandler day04_benchmarking_and_profiling/src/bench_resnet18_hef.py \
+  --hef day02_hailo_compile_hef/outputs/resnet18.hef \
+  --image day03_hailort_inference_runtime/assets/test.jpg \
+  --warmup 20 \
+  --iters 200 \
+  --no-teardown
+
+
+CLI baseline (hardware / driver benchmark):
+
+hailortcli benchmark day02_hailo_compile_hef/outputs/resnet18.hef
+
+
+Results summary:
+
+HailoRT CLI benchmark
+
+FPS (hw_only): 1149.89
+
+FPS (streaming): 1149.89
+
+HW Latency: 2.445 ms
+
+Python runtime benchmark (send → recv)
+
+Avg latency: 3.049 ms
+
+P50 latency: 2.708 ms
+
+P95 latency: 4.327 ms
+
+P99 latency: 11.769 ms
+
+Throughput: 328.0 FPS
+
+Key findings / interpretation:
+
+CLI numbers represent an upper bound (hardware-focused benchmark).
+
+Python runtime includes additional overhead (buffer handling + synchronization), so:
+
+average latency increases from 2.445 ms (HW) → 3.049 ms (Python E2E)
+
+throughput drops from ~1150 FPS → ~328 FPS
+
+Tail latency (P99) indicates occasional outliers (~11.8 ms), likely due to OS scheduling / runtime jitter.
+
+This becomes a key input for Day 05 packaging and any “real-time” framing.
+
+Outcome:
+
+Established a repeatable benchmarking method for Hailo inference
+
+Captured both:
+
+hardware baseline performance
+
+realistic Python end-to-end performance
+
+Created metrics that can be compared later against:
+
+different models (e.g., MobileNet / YOLO)
+
+different runtimes (C++ vs Python)
+
+different scheduling / batching strategies
+

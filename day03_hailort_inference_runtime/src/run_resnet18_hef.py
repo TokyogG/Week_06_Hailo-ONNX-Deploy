@@ -9,6 +9,10 @@ Workaround:
   --no-teardown  (forces os._exit(0) after printing results)
 """
 
+# NOTE:
+# On some HailoRT builds, Python teardown triggers a C++ destructor abort.
+# --no-teardown forces a clean exit after inference output.
+
 import argparse
 import os
 import numpy as np
